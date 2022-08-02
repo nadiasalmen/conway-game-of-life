@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'serialize_text_file_service'
+require "pry-byebug"
 
 # class Game.
 class Game
@@ -24,31 +25,8 @@ class Game
     @grid.each_with_index do |row, i|
       row.each_with_index do |cell, j|
         sum = 0
-        if i.zero?
-          if j.zero?
-            sum += @grid[i][j + 1].value + @grid[i + 1][j].value + @grid[i + 1][j + 1].value
-          elsif j == @columns - 1
-            sum += @grid[i][j - 1].value + @grid[i + 1][j].value + @grid[i + 1][j - 1].value
-          else
-            sum += @grid[i][j - 1].value + @grid[i][j + 1].value + @grid[i + 1][j].value +
-                  @grid[i + 1][j - 1].value + @grid[i + 1][j + 1].value
-          end
-        elsif i == @rows - 1
-          if j.zero?
-            sum += @grid[i - 1][j].value + @grid[i - 1][j + 1].value + @grid[i][j + 1].value
-          elsif j == @columns - 1
-            sum += @grid[i - 1][j].value + @grid[i - 1][j - 1].value + @grid[i][j - 1].value
-          else
-            sum += @grid[i - 1][j - 1].value + @grid[i - 1][j].value + @grid[i - 1][j + 1].value + @grid[i][j - 1].value + @grid[i][j + 1].value + @grid[i][j - 1].value
-          end
-        else
-          if j.zero?
-            sum += @grid[i - 1][j].value + @grid[i - 1][j + 1].value + @grid[i][j + 1].value + @grid[i + 1][j + 1].value
-          elsif j == @columns - 1
-            sum += @grid[i - 1][j].value + @grid[i - 1][j - 1].value + @grid[i][j - 1].value + @grid[i + 1][j - 1].value
-          else
-            sum += @grid[i - 1][j - 1].value + @grid[i - 1][j].value + @grid[i - 1][j + 1].value + @grid[i][j - 1].value + @grid[i][j + 1].value + @grid[i + 1][j - 1].value + @grid[i + 1][j].value + @grid[i + 1][j + 1].value
-          end
+        neighbours(i, j).each do |h, w|
+          sum += @grid[h][w].alive? ? 1 : 0
         end
         grid = cell_evolution(grid, cell, i, j, sum)
       end
@@ -71,5 +49,21 @@ class Game
                    Cell.new(false)
                  end
     grid
+  end
+
+  def neighbours(i, j)
+    neighbours = [
+      [i, j - 1],
+      [i, j + 1],
+      [i - 1, j - 1],
+      [i - 1, j],
+      [i - 1, j + 1],
+      [i + 1, j - 1],
+      [i + 1, j],
+      [i + 1, j + 1]
+    ]
+    neighbours.select do |h, w|
+      h.between?(0, @rows - 1) && w.between?(0, @columns - 1)
+    end
   end
 end
