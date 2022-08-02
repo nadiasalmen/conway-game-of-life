@@ -30,7 +30,8 @@ class Game
           elsif j == @columns - 1
             sum += @grid[i][j - 1].value + @grid[i + 1][j].value + @grid[i + 1][j - 1].value
           else
-            sum += @grid[i][j - 1].value + @grid[i][j + 1].value + @grid[i + 1][j].value + @grid[i + 1][j - 1].value + @grid[i + 1][j + 1].value
+            sum += @grid[i][j - 1].value + @grid[i][j + 1].value + @grid[i + 1][j].value +
+                  @grid[i + 1][j - 1].value + @grid[i + 1][j + 1].value
           end
         elsif i == @rows - 1
           if j.zero?
@@ -49,19 +50,26 @@ class Game
             sum += @grid[i - 1][j - 1].value + @grid[i - 1][j].value + @grid[i - 1][j + 1].value + @grid[i][j - 1].value + @grid[i][j + 1].value + @grid[i + 1][j - 1].value + @grid[i + 1][j].value + @grid[i + 1][j + 1].value
           end
         end
-        grid[i] ||= []
-        grid[i][j] = if sum == 3 || (sum == 2 && cell.alive?)
-                       Cell.new(cell.live)
-                     else
-                       Cell.new(cell.die)
-                     end
+        grid = cell_evolution(grid, cell, i, j, sum)
       end
     end
     grid
   end
 
-  def next_generation_text
-    "Generation #{next_generation_number}:\n#{@rows} #{@columns}\n" +
-      next_generation_grid.map { |row| row.map { |cell| cell.value == 1 ? '*' : '.' }.join('') }.join("\n")
+  def generation_text(generation_number, rows, columns, grid)
+    "Generation #{generation_number}:\n#{rows} #{columns}\n" +
+      grid.map { |row| row.map { |cell| cell.value == 1 ? '*' : '.' }.join('') }.join("\n")
+  end
+
+  private
+
+  def cell_evolution(grid, cell, i, j, sum)
+    grid[i] ||= []
+    grid[i][j] = if sum == 3 || (sum == 2 && cell.alive?)
+                   Cell.new(true)
+                 else
+                   Cell.new(false)
+                 end
+    grid
   end
 end

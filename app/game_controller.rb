@@ -15,7 +15,7 @@ class GameController
     game = Game.new
     @view.display_generations(game)
     File.open('lib/initial_generation.txt', 'w') do |file|
-      file.write(game.next_generation_text)
+      file.write(game.generation_text(game.next_generation_number, game.rows, game.columns, game.next_generation_grid))
       file.close
     end
     @router.run
