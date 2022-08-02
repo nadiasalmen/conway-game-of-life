@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'serialize_text_file_service'
-require "pry-byebug"
 
 # class Game.
 class Game
