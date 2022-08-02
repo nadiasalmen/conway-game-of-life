@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './app/models/cell'
+require_relative 'cell'
 
 # class SerializeTextFileService
 class SerializeTextFileService
@@ -38,9 +38,10 @@ class SerializeTextFileService
 
   def grid
     grid = []
-    text_to_array[2..].each do |row|
-      grid << row.split('').map do |cell|
-        Cell.new(cell == '*')
+    text_to_array[2..].each_with_index do |row, i|
+      row.split('').each_with_index do |cell, j|
+        grid[i] ||= []
+        grid[i][j] = Cell.new(cell == '*')
       end
     end
     grid
