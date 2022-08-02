@@ -22,11 +22,10 @@ class Router
 
   def route_action(action)
     case action
-    when 1 then @controller.input_initial_generation
-    when 2 then @controller.next_generation
-    when 3 then stop
+    when 1 then @controller.show_next_generation
+    when 2 then stop
     else
-      puts "Please press 1, 2, 3"
+      puts "Please press 1 or 2"
     end
   end
 
@@ -36,9 +35,8 @@ class Router
 
   def display_tasks
     puts ""
-    puts "1 - Input initial generation"
-    puts "2 - Next generation"
-    puts "3 - Stop and exit the program"
+    puts "1 - Show next generation"
+    puts "2 - Stop and exit the program"
     puts ""
   end
 end
