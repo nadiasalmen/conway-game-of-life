@@ -11,6 +11,8 @@ class ValidateTextFileService
     errors = []
     errors << 'File is empty' if empty_file?
     errors << 'File format is not valid' unless valid_text_format?
+    return errors if errors.any?
+
     errors << 'Number of rows does not match input grid' unless rows_match_grid?
     errors << 'Number of columns does not match input grid or some columns are incomplete' unless columns_match_grid?
     errors
@@ -19,7 +21,7 @@ class ValidateTextFileService
   private
 
   def empty_file?
-    @text.empty?
+    @text == ''
   end
 
   def valid_text_format?
