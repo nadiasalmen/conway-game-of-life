@@ -9,6 +9,8 @@ class GameView
     write_generation(game, game.next_generation_number, game.next_generation_grid)
   end
 
+  private
+
   def write_generation(game, generation_number, grid)
     puts "Generation #{generation_number}:"
     puts "#{game.rows} #{game.columns}"
