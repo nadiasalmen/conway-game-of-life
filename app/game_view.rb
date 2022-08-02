@@ -3,7 +3,7 @@
 # class GameView
 class GameView
   def display_generations(game)
-    puts '------------ Current Generation --------------'
+    puts '------------ Current Generation -----------'
     write_generation(game, game.generation_number, game.grid)
     puts '------------ Next Generation --------------'
     write_generation(game, game.next_generation_number, game.next_generation_grid)

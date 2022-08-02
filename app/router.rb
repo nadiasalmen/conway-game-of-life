@@ -8,12 +8,11 @@ class Router
   end
 
   def run
-    puts "Welcome to the Game of Life!"
-    puts "           --           "
-
     while @running
       display_tasks
-      action = gets.chomp.to_i
+      print '> '
+      action = STDIN.gets.chomp.to_i
+      print `clear`
       route_action(action)
     end
   end
@@ -25,7 +24,10 @@ class Router
     when 1 then @controller.show_next_generation
     when 2 then stop
     else
-      puts "Please press 1 or 2"
+      puts '-------------------------------------------'
+      puts 'Please, 1 or 2.'
+      puts '-------------------------------------------'
+      print '> '
     end
   end
 
@@ -34,9 +36,9 @@ class Router
   end
 
   def display_tasks
-    puts ""
-    puts "1 - Show next generation"
-    puts "2 - Stop and exit the program"
-    puts ""
+    puts '-------------------------------------------'
+    puts '1 - Show next generation'
+    puts '2 - Stop and exit the program'
+    puts '-------------------------------------------'
   end
 end
