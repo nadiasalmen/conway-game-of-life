@@ -9,8 +9,9 @@ validation_errors = ValidateTextFileService.new(path_to_file).call
 unless validation_errors.empty?
   puts 'Your file is invalid. Please, check the following errors:'
   validation_errors.each do |error|
-    puts error
+    puts "- #{error}"
   end
+  puts '-------------------------------------------'
   puts 'Please, try again. Your .txt file should match the following format:'
   puts '-------------------------------------------'
   puts 'Generation 5:
